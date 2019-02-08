@@ -46,16 +46,13 @@ plugins:
 #   - vendor/ruby/
 
 scholar:
-#  style: assets/bibliography/acm-sig-proceedings.csl
-  style: assets/bibliography/ieee-with-url.csl
+  style: assets/bibliography/acm-sig-proceedings.csl
   locale: en
   source: ./_files
   bibliography: main.bib
-#  bibliography_list_tag: ul
-#  use_raw_bibtex_entry: true
+  use_raw_bibtex_entry: true
   sort_by: year,month
   order: descending
-#  group_by: none
-#  group_order: ascending
-  replace_strings: true
-#  bibtex_filters: latex
+  group_by: none
+  group_order: ascending
+  bibtex_filters: latex
