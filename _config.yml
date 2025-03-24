@@ -9,7 +9,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : "Hello World!"
+title                    : ">> Hello World!"
 title_separator          : "-"
 name                     : &name "Yeounoh Chung"
 description              : &description ""
@@ -24,7 +24,7 @@ author:
   # Biographic information
   avatar           : "yeounoh_pic.JPG"
   name             : "Yeounoh Chung" 
-  bio              : "AI Systems Research@Google"
+  #bio              :
   #employer         : "Google"
   email            : "yeounohster@gmail.com" 
 
@@ -75,7 +75,9 @@ author:
 # Publication Category - The following the list of publication categories and their headings
 publication_category:
   papers:
-    title: 'Papers'
+    title: 'Selected Publications'
+  reports:
+    title: 'Technical Reports'
   # books:
   #   title: 'Books'
   # manuscripts:
@@ -99,7 +101,7 @@ comments:
   facebook:
     appid                :
     num_posts            : # 5 (default)
-    colorscheme          : "dark" # "light" (default), "dark"
+    colorscheme          : # "light" (default), "dark"
 staticman:
   allowedFields          : ['name', 'email', 'url', 'message']
   branch                 : "gh-pages" # "master", "gh-pages"

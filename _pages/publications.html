@@ -23,7 +23,12 @@ author_profile: true
         <h2>{{ category[1].title }}</h2><hr />
         {% assign title_shown = true %}
       {% endunless %}
-      {% include archive-single.html %}
+      <li style="display: list-item;">
+        <span class="archive__item-body" style="font-size: 0.8em;">
+          <i>"<a href="{{ post.paperurl }}" rel="permalink">{{ post.title }}</a>"</i>, 
+          {{ post.venue }} {{ post.date | default: "" | date: "%Y" }}
+        </span>
+      </li>
     {% endfor %}
   {% endfor %}
 {% else %}

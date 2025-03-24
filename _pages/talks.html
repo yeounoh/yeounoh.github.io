@@ -12,5 +12,9 @@ author_profile: true
 {% endif %}
 
 {% for post in site.talks reversed %}
-  {% include archive-single-talk.html %}
+  <li style="display: list-item;">
+    <span class="archive__item-body" style="font-size: 0.8em;">
+      <i>"{{ post.title }}"</i>, {{ post.venue }}, {{post.location}} {{ post.date | default: "" | date: "%Y" }}
+    </span>
+  </li>
 {% endfor %}
