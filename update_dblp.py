@@ -42,7 +42,7 @@ for rec in root.findall('r'):
     
     # Venue/Collection - often in 'journal' or 'booktitle'
     venue_element = pub.find('journal') or pub.find('booktitle') or pub.find('publisher')
-    venue = venue_element.text if venue_element is not None else 'Unknown Venue'
+    venue = venue_element.text if venue_element is not None else ''
     
     # Find the DOI or URL (usually the first 'ee' element)
     paperurl = next((ee.text for ee in pub.findall('ee') if ee.text and 'doi' in ee.text), '')
@@ -69,9 +69,9 @@ paperurl: '{paperurl}'
 """
     
     # Write the file
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write(content)
-    
-    print(f"Generated file: {filename}")
+    if not os.path.exists(filename):
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print(f"Generated file: {filename}")
 
 print("DBLP update complete. Check the _publications directory.")
