@@ -22,6 +22,12 @@
     overflow-y: auto;               // Add scrollbar if the sidebar is too long
     position: fixed;
     padding-top: $masthead-height;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: rgba(var(--global-bg-color-rgb), 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   @include breakpoint($large) {
@@ -96,6 +102,7 @@
   img {
     max-width: 175px;
     border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
     @include breakpoint($large) {
       padding: 5px;
