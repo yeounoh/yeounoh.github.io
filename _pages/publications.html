@@ -6,59 +6,35 @@ author_profile: true
 ---
 
 {% if site.author.googlescholar %}
-  <div class="pub-scholar-banner">
-    <i class="ai ai-google-scholar"></i>
-    <span>For citation metrics and the complete list, visit my <a href="{{site.author.googlescholar}}" target="_blank" rel="noopener noreferrer">Google Scholar profile</a>.</span>
-  </div>
+  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
 {% endif %}
 
 {% include base_path %}
 
+<!-- New style rendering if publication categories are defined -->
 {% if site.publication_category %}
-  {% for category in site.publication_category %}
+  {% for category in site.publication_category  %}
     {% assign title_shown = false %}
     {% for post in site.publications reversed %}
       {% if post.category != category[0] %}
         {% continue %}
       {% endif %}
       {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2>
-        <div class="pub-list">
+        <h2>{{ category[1].title }}</h2><hr />
         {% assign title_shown = true %}
       {% endunless %}
-      <div class="pub-item">
-        <div class="pub-item__main">
-          <h3 class="pub-item__title">
-            {% if post.paperurl and post.paperurl != '' %}
-              <a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>
-            {% else %}
-              {{ post.title }}
-            {% endif %}
-          </h3>
-          <div class="pub-item__meta">
-            {% if post.venue and post.venue != '' %}
-              <span class="pub-badge pub-badge--venue">{{ post.venue }}</span>
-            {% endif %}
-            <span class="pub-badge pub-badge--year">{{ post.date | default: post.year | date: "%Y" }}</span>
-            {% if post.paperurl and post.paperurl != '' %}
-              <a href="{{ post.paperurl }}" class="pub-link-btn" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-file-arrow-down"></i> Paper
-              </a>
-            {% endif %}
-          </div>
-        </div>
-      </div>
+      <li style="display: list-item;">
+        <span class="archive__item-body" style="font-size: 0.8em;">
+          <i>"<a href="{{ post.paperurl }}" rel="permalink">{{ post.title }}</a>"</i>, 
+          {{ post.venue }} {{ post.date | default: "" | date: "%Y" }}
+        </span>
+      </li>
     {% endfor %}
-    {% if title_shown %}
-      </div>
-    {% endif %}
   {% endfor %}
 {% else %}
-  <div class="pub-list">
-    {% for post in site.publications reversed %}
-      {% include archive-single.html %}
-    {% endfor %}
-  </div>
+  {% for post in site.publications reversed %}
+    {% include archive-single.html %}
+  {% endfor %}
 {% endif %}
 
 

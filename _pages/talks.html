@@ -11,21 +11,10 @@ author_profile: true
 
 {% endif %}
 
-<div class="talk-list">
-  {% for post in site.talks reversed %}
-    <div class="talk-item">
-      <h3 class="talk-item__title">{{ post.title }}</h3>
-      <div class="talk-item__meta">
-        {% if post.venue and post.venue != '' %}
-          <span class="pub-badge pub-badge--venue">{{ post.venue }}</span>
-        {% endif %}
-        {% if post.location and post.location != '' %}
-          <span class="pub-badge pub-badge--year"><i class="fas fa-location-dot" style="margin-right: 4px;"></i>{{ post.location }}</span>
-        {% endif %}
-        {% if post.date %}
-          <span class="pub-badge pub-badge--year">{{ post.date | date: "%B %Y" }}</span>
-        {% endif %}
-      </div>
-    </div>
-  {% endfor %}
-</div>
+{% for post in site.talks reversed %}
+  <li style="display: list-item;">
+    <span class="archive__item-body" style="font-size: 0.8em;">
+      <i>"{{ post.title }}"</i>, {{ post.venue }}, {{post.location}} {{ post.date | default: "" | date: "%Y" }}
+    </span>
+  </li>
+{% endfor %}
