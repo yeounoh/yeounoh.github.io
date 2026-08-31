@@ -17,7 +17,7 @@ I am currently at Google doing AI and data systems research. I've had the pleasu
 *   **Data-Driven Intelligence**: Extracting insights from massive datasets.
 
 ## Education
-*   **Cornell University**, BS in ECE & ME in CS
+*   **Cornell University**, BS & MEng in ECE & CS
 *   **Brown University**, CS PhD (formerly [my Brown student website](https://cs.brown.edu/people/yc108/))
 
 ## Experience

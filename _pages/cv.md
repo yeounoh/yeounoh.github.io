@@ -11,7 +11,7 @@ redirect_from:
 
 Education
 ======
-* **Cornell University**, BS in ECE & ME in CS
+* **Cornell University**, BS & MEng in ECE & CS
 * **Brown University**, CS PhD
 * *Add your years here*
 
