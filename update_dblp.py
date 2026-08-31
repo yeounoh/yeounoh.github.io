@@ -62,7 +62,7 @@ for rec in root.findall('r'):
 title: "{title}"
 collection: publications
 category: papers
-permalink: /publication/{permalink_suffix}'
+permalink: /publication/{permalink_suffix}
 venue: '{venue}'
 paperurl: '{paperurl}'
 ---

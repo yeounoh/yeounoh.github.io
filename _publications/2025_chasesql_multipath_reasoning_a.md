@@ -6,4 +6,5 @@ category: papers
 permalink: /publication/2025_chasesql_multipath_reasoning_a
 venue: ICLR
 paperurl: https://openreview.net/forum?id=CvGqMD5OtX
+date: 2025-01-01
 ---

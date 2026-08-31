@@ -6,4 +6,5 @@ category: papers
 permalink: /publication/2013_game_bot_detection_approach_ba
 venue: ETRI Journal
 paperurl: https://onlinelibrary.wiley.com/doi/abs/10.4218/etrij.13.2013.0049
+date: 2013-01-01
 ---
