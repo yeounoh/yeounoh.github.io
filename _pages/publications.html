@@ -1,41 +1,238 @@
 ---
-layout: archive
-title: "Publications"
+layout: editorial
 permalink: /publications/
-author_profile: true
+kicker: "Bibliography"
+title: "Publications"
+subtitle: "Research papers and technical reports across databases, semantic AI queries, Text-to-SQL, and ML systems."
 ---
-
-{% if site.author.googlescholar %}
-  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
-{% endif %}
 
 {% include base_path %}
 
-<!-- New style rendering if publication categories are defined -->
-{% if site.publication_category %}
-  {% for category in site.publication_category  %}
-    {% assign title_shown = false %}
-    {% for post in site.publications reversed %}
-      {% if post.category != category[0] %}
-        {% continue %}
-      {% endif %}
-      {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
-        {% assign title_shown = true %}
-      {% endunless %}
-      <li style="display: list-item;">
-        <span class="archive__item-body" style="font-size: 0.8em;">
-          <i>"<a href="{{ post.paperurl }}" rel="permalink">{{ post.title }}</a>"</i>, 
-          {{ post.venue }} {{ post.date | default: "" | date: "%Y" }}
-        </span>
-      </li>
-    {% endfor %}
-  {% endfor %}
-{% else %}
+<div class="pub-toolbar">
+  <div class="pub-search-wrap">
+    <i class="fa-solid fa-magnifying-glass pub-search-icon" aria-hidden="true"></i>
+    <input
+      id="pub-search"
+      class="pub-search-input"
+      type="search"
+      placeholder="Filter by title, author, venue, or year..."
+      aria-label="Filter publications"
+    />
+  </div>
+
+  <div class="pub-filter-row" id="pub-filters" role="group" aria-label="Filter by research area">
+    <button type="button" class="filter-chip is-active" data-filter="all">All</button>
+    <button type="button" class="filter-chip" data-filter="semantic">Semantic &amp; AI Queries</button>
+    <button type="button" class="filter-chip" data-filter="nl2sql">Text-to-SQL</button>
+    <button type="button" class="filter-chip" data-filter="tpu">TPU &amp; ML Systems</button>
+    <button type="button" class="filter-chip" data-filter="early">Validation &amp; Early Work</button>
+  </div>
+
+  <div class="pub-toolbar__meta">
+    <span id="pub-count" class="pub-count">Showing {{ site.publications.size }} publications</span>
+    {% if site.author.googlescholar %}
+      <a class="mini-link" href="{{ site.author.googlescholar }}" target="_blank" rel="noopener noreferrer">Google Scholar &nearr;</a>
+    {% endif %}
+  </div>
+</div>
+
+<div id="pub-groups" class="pub-groups">
+  {% assign current_year = "" %}
   {% for post in site.publications reversed %}
-    {% include archive-single.html %}
+    {% assign pub_year = post.date | date: "%Y" %}
+    {% assign pub_topic = post.topic | default: "early" %}
+    {% if pub_year != current_year %}
+      {% if current_year != "" %}
+        </ul>
+      </section>
+      {% endif %}
+      {% assign current_year = pub_year %}
+      <section class="pub-year-group" data-year="{{ current_year }}">
+        <h2 class="pub-year-group__heading">{{ current_year }}</h2>
+        <ul class="pub-list">
+    {% endif %}
+
+    {% assign has_paperurl = false %}
+    {% if post.paperurl and post.paperurl != '' %}{% assign has_paperurl = true %}{% endif %}
+    {% assign clean_excerpt = post.content | strip_html | strip_newlines | strip %}
+    {% capture search_blob %}{{ post.title }} {{ post.authors }} {{ post.venue }} {{ pub_year }} {{ clean_excerpt }}{% endcapture %}
+
+    <li class="pub-row" data-topic="{{ pub_topic }}" data-search="{{ search_blob | downcase | escape }}">
+      <div class="pub-row__aside">
+        {% if post.venue and post.venue != '' %}
+          <span class="venue-chip">{{ post.venue }}</span>
+        {% endif %}
+        {% if post.category == 'reports' %}
+          <span class="pub-kind">Report</span>
+        {% endif %}
+      </div>
+
+      <div class="pub-row__main">
+        <h3 class="pub-row__title">
+          {% if has_paperurl %}
+            <a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>
+          {% else %}
+            <a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a>
+          {% endif %}
+        </h3>
+
+        {% if post.authors and post.authors != '' %}
+          <p class="pub-row__authors">{{ post.authors | replace: "Yeounoh Chung", "<strong>Yeounoh Chung</strong>" }}</p>
+        {% endif %}
+
+        <div class="pub-row__actions">
+          {% if has_paperurl %}
+            <a class="mini-link" href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">Paper</a>
+          {% endif %}
+          {% if post.arxivurl and post.arxivurl != '' and post.arxivurl != post.paperurl %}
+            <a class="mini-link" href="{{ post.arxivurl }}" target="_blank" rel="noopener noreferrer">arXiv</a>
+          {% endif %}
+          {% if post.codeurl and post.codeurl != '' %}
+            <a class="mini-link" href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">Code</a>
+          {% endif %}
+          {% if clean_excerpt != '' %}
+            <button type="button" class="mini-btn js-toggle-abstract" aria-expanded="false">Summary</button>
+          {% endif %}
+          <button
+            type="button"
+            class="mini-btn js-copy-bib"
+            data-title="{{ post.title | escape }}"
+            data-authors="{{ post.authors | default: 'Yeounoh Chung' | escape }}"
+            data-venue="{{ post.venue | default: 'Preprint' | escape }}"
+            data-year="{{ pub_year }}"
+            data-url="{{ post.paperurl | default: '' | escape }}"
+          >BibTeX</button>
+        </div>
+
+        {% if clean_excerpt != '' %}
+          <div class="pub-row__abstract" hidden>
+            <p>{{ clean_excerpt }}</p>
+          </div>
+        {% endif %}
+        <div class="pub-row__bib" hidden><pre><code></code></pre></div>
+      </div>
+    </li>
   {% endfor %}
-{% endif %}
+  {% if current_year != "" %}
+      </ul>
+    </section>
+  {% endif %}
+</div>
 
+<div id="pub-empty" class="pub-empty" hidden>
+  <p>No publications match the active filter.</p>
+  <button type="button" id="pub-reset" class="btn-outline">Reset filters</button>
+</div>
 
+<script>
+(function () {
+  var searchInput = document.getElementById("pub-search");
+  var filterButtons = document.querySelectorAll("#pub-filters .filter-chip");
+  var rows = document.querySelectorAll(".pub-row");
+  var groups = document.querySelectorAll(".pub-year-group");
+  var countEl = document.getElementById("pub-count");
+  var emptyEl = document.getElementById("pub-empty");
+  var resetBtn = document.getElementById("pub-reset");
+  var activeFilter = "all";
 
+  function applyFilters() {
+    var query = (searchInput.value || "").trim().toLowerCase();
+    var visibleCount = 0;
+
+    rows.forEach(function (row) {
+      var topic = row.getAttribute("data-topic") || "early";
+      var hay = row.getAttribute("data-search") || "";
+      var matchTopic = activeFilter === "all" || topic === activeFilter;
+      var matchQuery = !query || hay.indexOf(query) !== -1;
+      var show = matchTopic && matchQuery;
+      row.hidden = !show;
+      if (show) visibleCount++;
+    });
+
+    groups.forEach(function (group) {
+      var anyVisible = group.querySelector(".pub-row:not([hidden])") !== null;
+      group.hidden = !anyVisible;
+    });
+
+    countEl.textContent = "Showing " + visibleCount + (visibleCount === 1 ? " publication" : " publications");
+    emptyEl.hidden = visibleCount > 0;
+  }
+
+  filterButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      filterButtons.forEach(function (b) { b.classList.remove("is-active"); });
+      btn.classList.add("is-active");
+      activeFilter = btn.getAttribute("data-filter") || "all";
+      applyFilters();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener("input", applyFilters);
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      searchInput.value = "";
+      activeFilter = "all";
+      filterButtons.forEach(function (b) {
+        b.classList.toggle("is-active", b.getAttribute("data-filter") === "all");
+      });
+      applyFilters();
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    var absBtn = e.target.closest(".js-toggle-abstract");
+    if (absBtn) {
+      var row = absBtn.closest(".pub-row");
+      var panel = row.querySelector(".pub-row__abstract");
+      if (panel) {
+        var expanded = absBtn.getAttribute("aria-expanded") === "true";
+        absBtn.setAttribute("aria-expanded", String(!expanded));
+        panel.hidden = expanded;
+      }
+      return;
+    }
+
+    var bibBtn = e.target.closest(".js-copy-bib");
+    if (bibBtn) {
+      var row = bibBtn.closest(".pub-row");
+      var bibBox = row.querySelector(".pub-row__bib");
+      var title = (bibBtn.getAttribute("data-title") || "").replace(/\.$/, "");
+      var authors = bibBtn.getAttribute("data-authors") || "Yeounoh Chung";
+      var venue = bibBtn.getAttribute("data-venue") || "Preprint";
+      var year = bibBtn.getAttribute("data-year") || "2026";
+      var url = bibBtn.getAttribute("data-url") || "";
+      var firstWord = (title.toLowerCase().match(/[a-z0-9]+/) || ["paper"])[0];
+      var isPreprint = venue.toLowerCase().indexOf("arxiv") !== -1 || venue.toLowerCase().indexOf("blog") !== -1;
+      var entryType = isPreprint ? "article" : "inproceedings";
+      var key = "chung" + year + firstWord;
+      var venueField = isPreprint ? "journal" : "booktitle";
+      var lines = [
+        "@" + entryType + "{" + key + ",",
+        "  title={" + title + "},",
+        "  author={" + authors + "},",
+        "  " + venueField + "={" + venue + "},",
+        "  year={" + year + "}" + (url ? "," : "")
+      ];
+      if (url) lines.push("  url={" + url + "}");
+      lines.push("}");
+      var bibtex = lines.join("\n");
+
+      if (bibBox) {
+        var wasHidden = bibBox.hidden;
+        bibBox.querySelector("code").textContent = bibtex;
+        bibBox.hidden = !wasHidden;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(bibtex).then(function () {
+          var orig = bibBtn.textContent;
+          bibBtn.textContent = "Copied!";
+          setTimeout(function () { bibBtn.textContent = orig; }, 1600);
+        }).catch(function () {});
+      }
+    }
+  });
+})();
+</script>

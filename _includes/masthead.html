@@ -1,26 +1,46 @@
 {% include base_path %}
 
-<div class="masthead">
+<header class="masthead">
   <div class="masthead__inner-wrap">
+    <a class="masthead__brand" href="{{ base_path }}/">
+      <span class="masthead__prompt" aria-hidden="true">&gt;&gt;</span>
+      <span class="masthead__title">{{ site.title }}</span>
+    </a>
     <div class="masthead__menu">
-      <nav id="site-nav" class="greedy-nav">
-        <button><div class="navicon"></div></button>
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        <button class="hidden" aria-label="Toggle navigation menu"><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="{{ base_path }}/">{{ site.title }}</a></li>
           {% for link in site.data.navigation.main %}
             {% if link.url contains 'http' %}
               {% assign domain = '' %}
             {% else %}
               {% assign domain = base_path %}
             {% endif %}
-            <li class="masthead__menu-item"><a href="{{ domain }}{{ link.url }}">{{ link.title }}</a></li>
+            {% assign is_active = false %}
+            {% if link.url == '/' and page.url == '/' %}
+              {% assign is_active = true %}
+            {% elsif link.url != '/' and page.url contains link.url %}
+              {% assign is_active = true %}
+            {% endif %}
+            <li class="masthead__menu-item{% if is_active %} is-active{% endif %}">
+              <a href="{{ domain }}{{ link.url }}"{% if is_active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+            </li>
           {% endfor %}
+          {% if site.author.googlescholar %}
+            <li class="masthead__menu-item masthead__menu-item--icon">
+              <a href="{{ site.author.googlescholar }}" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar" title="Google Scholar">
+                <i class="ai ai-google-scholar" aria-hidden="true"></i><span class="masthead__icon-label">Scholar</span>
+              </a>
+            </li>
+          {% endif %}
           <li id="theme-toggle" class="masthead__menu-item persist tail">
-            <a><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
+            <a role="button" tabindex="0" aria-label="Toggle color theme" title="Toggle light/dark theme">
+              <i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true"></i>
+            </a>
           </li>
         </ul>
         <ul class="hidden-links hidden"></ul>
       </nav>
     </div>
   </div>
-</div>
+</header>

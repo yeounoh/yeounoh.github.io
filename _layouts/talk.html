@@ -4,75 +4,53 @@ layout: default
 
 {% include base_path %}
 
-{% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
-  {% include page__hero.html %}
-{% endif %}
-
-{% if page.url != "/" and site.breadcrumbs %}
-  {% unless paginator %}
-    {% include breadcrumbs.html %}
-  {% endunless %}
-{% endif %}
-
-<div id="main" role="main">
-  {% include sidebar.html %}
-
-  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+<main id="main" class="article-shell" role="main">
+  <article class="editorial-article" itemscope itemtype="http://schema.org/CreativeWork">
     {% if page.title %}<meta itemprop="headline" content="{{ page.title | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
-    {% if page.excerpt %}<meta itemprop="description" content="{{ page.excerpt | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
-    {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date: "%B %d, %Y" }}">{% endif %}
-    {% if page.modified %}<meta itemprop="dateModified" content="{{ page.modified | date: "%B %d, %Y" }}">{% endif %}
+    {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date: '%B %d, %Y' }}">{% endif %}
 
-    <div class="page__inner-wrap">
-      {% unless page.header.overlay_color or page.header.overlay_image %}
-        <header>
-          {% if page.title %}<h1 class="page__title" itemprop="headline">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>{% endif %}
-          {% if page.read_time %}
-            <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
-          {% endif %}
-        {% if page.modified %}
-          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>Date:</strong> <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time></p>
-        {% elsif page.date %}
-          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>Date:</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time></p>
+    <a class="back-link" href="{{ base_path }}/talks/">&larr; All Talks &amp; Presentations</a>
+
+    <header class="editorial-article__header">
+      <div class="editorial-article__meta">
+        {% if page.venue %}
+          <span class="venue-chip">{{ page.venue }}</span>
         {% endif %}
-        {% if page.talk_type %}<p>{{page.talk_type}} at {{ page.venue }},  {{page.location}} {% endif %}
-
-        </header>
-      {% endunless %}
-
-      <section class="page__content" itemprop="text">
-        {{ content }}
-        {% if page.link %}<div><a href="{{ page.link }}" class="btn">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
-      </section>
-
-      <footer class="page__meta">
-        {% if site.data.ui-text[site.locale].meta_label %}
-          <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
+        {% if page.date %}
+          <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
         {% endif %}
-        {% include page__taxonomy.html %}
-      </footer>
+        {% if page.location %}
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>{{ page.location }}</span>
+        {% endif %}
+      </div>
+      {% if page.title %}
+        <h1 class="editorial-article__title" itemprop="headline">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>
+      {% endif %}
+      {% if page.type %}
+        <p class="editorial-article__authors">{{ page.type }}</p>
+      {% endif %}
+    </header>
 
-      {% if page.share %}{% include social-share.html %}{% endif %}
+    <section class="editorial-article__content" itemprop="text">
+      {{ content }}
+    </section>
 
-      {% include post_pagination.html %}
-    </div>
-
-    {% if site.comments.provider and page.comments %}
-      {% include comments.html %}
+    {% if page.paperurl or page.arxivurl or page.videourl or page.slidesurl %}
+      <div class="editorial-article__actions">
+        {% if page.paperurl %}
+          <a class="btn-solid" href="{{ page.paperurl }}" target="_blank" rel="noopener noreferrer">Paper</a>
+        {% endif %}
+        {% if page.arxivurl and page.arxivurl != page.paperurl %}
+          <a class="btn-outline" href="{{ page.arxivurl }}" target="_blank" rel="noopener noreferrer">arXiv</a>
+        {% endif %}
+        {% if page.videourl %}
+          <a class="btn-solid" href="{{ page.videourl }}" target="_blank" rel="noopener noreferrer">Watch Session</a>
+        {% endif %}
+        {% if page.slidesurl %}
+          <a class="btn-outline" href="{{ page.slidesurl }}" target="_blank" rel="noopener noreferrer">Slides</a>
+        {% endif %}
+      </div>
     {% endif %}
   </article>
-
-  {% comment %}<!-- only show related on a post page when not disabled -->{% endcomment %}
-  {% if page.id and page.related and site.related_posts.size > 0 %}
-    <div class="page__related">
-      {% if site.data.ui-text[site.locale].related_label %}
-        <h4 class="page__related-title">{{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}</h4>
-      {% endif %}
-      <div class="grid__wrapper">
-        {% for post in site.related_posts limit:4 %}
-          {% include archive-single.html type="grid" %}
-        {% endfor %}
-      </div>
-    </div>
-  {% endif %}
-</div>
+</main>

@@ -1,20 +1,36 @@
 {% include base_path %}
 
 <!-- start custom head snippets -->
-
-<!-- favicon from https://commons.wikimedia.org/wiki/File:OOjs_UI_icon_academic-progressive.svg -->
 <link rel="apple-touch-icon" sizes="180x180" href="{{ base_path }}/images/apple-touch-icon-180x180.png"/>
 <link rel="icon" type="image/svg+xml" href="{{ base_path }}/images/favicon.svg"/>
 <link rel="icon" type="image/png" href="{{ base_path }}/images/favicon-32x32.png" sizes="32x32"/>
 <link rel="icon" type="image/png" href="{{ base_path }}/images/favicon-192x192.png" sizes="192x192"/>
 <link rel="manifest" href="{{ base_path }}/images/manifest.json"/>
 <link rel="icon" href="/images/favicon.ico"/>
-<meta name="theme-color" content="#ffffff"/>
+<meta name="theme-color" content="#fafaf8"/>
+
+<!-- Typography: Newsreader (editorial serif), Inter (UI/body), JetBrains Mono (venues/tags) -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&display=swap" rel="stylesheet"/>
+
 <link rel="stylesheet" href="{{ base_path }}/assets/css/academicons.css"/>
+<link rel="stylesheet" href="{{ base_path }}/assets/css/custom.css?v=20261120"/>
 
+<!-- Apply stored theme early to avoid flash of wrong theme -->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      } else if (saved === "light") {
+        document.documentElement.removeAttribute("data-theme");
+      }
+    } catch (e) {}
+  })();
+</script>
 
-<!-- Support for MatJax -->
-<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<!-- Support for MathJax -->
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
 <!-- end custom head snippets -->

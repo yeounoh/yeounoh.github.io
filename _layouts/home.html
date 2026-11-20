@@ -1,0 +1,212 @@
+---
+layout: default
+---
+
+{% include base_path %}
+
+<main id="main" class="home-shell" role="main">
+  <!-- Hero Section -->
+  <section class="hero" aria-labelledby="hero-name">
+    <div class="hero__grid">
+      <div class="hero__intro">
+        <p class="hero__eyebrow">{{ page.eyebrow }}</p>
+        <h1 id="hero-name" class="hero__name">{{ site.author.name }}</h1>
+        <p class="hero__tagline">{{ page.tagline }}</p>
+        <p class="hero__bio">{{ page.bio_summary }}</p>
+
+        <div class="hero__actions">
+          <a class="btn-solid" href="{{ base_path }}/publications/">
+            Publications <span class="btn-count">{{ site.publications.size }}</span>
+          </a>
+          <a class="btn-outline" href="{{ base_path }}/talks/">
+            Talks <span class="btn-count">{{ site.talks.size }}</span>
+          </a>
+          {% if site.author.googlescholar %}
+            <a class="btn-ghost" href="{{ site.author.googlescholar }}" target="_blank" rel="noopener noreferrer">
+              <i class="ai ai-google-scholar" aria-hidden="true"></i> Google Scholar
+            </a>
+          {% endif %}
+          {% if site.author.arxiv %}
+            <a class="btn-ghost" href="{{ site.author.arxiv }}" target="_blank" rel="noopener noreferrer">
+              <i class="ai ai-arxiv" aria-hidden="true"></i> arXiv
+            </a>
+          {% endif %}
+          {% if site.author.email %}
+            <a class="btn-ghost" href="mailto:{{ site.author.email }}">
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i> Email
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="hero__media">
+        <figure class="portrait-frame">
+          <img src="{{ site.author.avatar | prepend: '/images/' | prepend: base_path }}" alt="{{ site.author.name }}" width="260" height="260"/>
+          {% if page.avatar_caption %}
+            <figcaption class="portrait-frame__caption">{{ page.avatar_caption }}</figcaption>
+          {% endif %}
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlighted Recent Work -->
+  <section class="section" aria-labelledby="highlights-heading">
+    <div class="section__header">
+      <div>
+        <span class="section__kicker">Research Thrusts</span>
+        <h2 id="highlights-heading" class="section__title">Selected Recent Work</h2>
+      </div>
+      <a class="section__more" href="{{ base_path }}/publications/">All publications &rarr;</a>
+    </div>
+
+    <div class="pillars-grid">
+      {% for pillar in page.highlights %}
+        <article class="pillar-card">
+          <div class="pillar-card__top">
+            <span class="pillar-card__index">{{ pillar.index }}</span>
+            <h3 class="pillar-card__title">{{ pillar.title }}</h3>
+            <p class="pillar-card__desc">{{ pillar.summary }}</p>
+          </div>
+          <ul class="pillar-card__papers">
+            {% for item in pillar.works %}
+              <li class="pillar-work">
+                <div class="pillar-work__head">
+                  <a class="pillar-work__title" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
+                  <span class="venue-chip">{{ item.venue }}</span>
+                </div>
+                <p class="pillar-work__note">{{ item.note }}</p>
+              </li>
+            {% endfor %}
+          </ul>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Research Interests & Systems Background -->
+  <section class="section" aria-labelledby="profile-heading">
+    <div class="profile-split">
+      <div class="profile-col">
+        <span class="section__kicker">Focus</span>
+        <h2 id="profile-heading" class="section__title">Research Interests</h2>
+        <ul class="clean-list">
+          {% for interest in page.interests %}
+            <li>
+              <strong>{{ interest.title }}</strong>
+              <span>{{ interest.detail }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="profile-col">
+        <span class="section__kicker">Background</span>
+        <h2 class="section__title">Experience &amp; Service</h2>
+        <ul class="clean-list">
+          {% for exp in page.experience %}
+            <li>
+              <strong>{{ exp.org }}{% if exp.role %} &mdash; <span class="role-text">{{ exp.role }}</span>{% endif %}</strong>
+              <span>{{ exp.detail }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Talks -->
+  <section class="section" aria-labelledby="talks-heading">
+    <div class="section__header">
+      <div>
+        <span class="section__kicker">Presentations</span>
+        <h2 id="talks-heading" class="section__title">Recent Conference Talks</h2>
+      </div>
+      <a class="section__more" href="{{ base_path }}/talks/">All talks &rarr;</a>
+    </div>
+
+    <div class="home-feed">
+      {% for talk in site.talks reversed limit:3 %}
+        <article class="home-feed__item">
+          <div class="home-feed__meta">
+            <time datetime="{{ talk.date | date: '%Y-%m-%d' }}">{{ talk.date | date: "%b %Y" }}</time>
+            <span class="meta-dot" aria-hidden="true">&middot;</span>
+            <span class="venue-text">{{ talk.venue }}</span>
+            {% if talk.location %}
+              <span class="meta-dot" aria-hidden="true">&middot;</span>
+              <span class="loc-text">{{ talk.location }}</span>
+            {% endif %}
+          </div>
+          <div class="home-feed__body">
+            <h3 class="home-feed__title">
+              <a href="{{ base_path }}{{ talk.url }}">{{ talk.title }}</a>
+            </h3>
+            {% assign talk_has_links = false %}
+            {% if talk.paperurl and talk.paperurl != '' %}{% assign talk_has_links = true %}{% endif %}
+            {% if talk.arxivurl and talk.arxivurl != '' %}{% assign talk_has_links = true %}{% endif %}
+            {% if talk.videourl and talk.videourl != '' %}{% assign talk_has_links = true %}{% endif %}
+            {% if talk_has_links %}
+              <div class="home-feed__links">
+                {% if talk.paperurl and talk.paperurl != '' %}
+                  <a class="mini-link" href="{{ talk.paperurl }}" target="_blank" rel="noopener noreferrer">Paper</a>
+                {% endif %}
+                {% if talk.arxivurl and talk.arxivurl != '' and talk.arxivurl != talk.paperurl %}
+                  <a class="mini-link" href="{{ talk.arxivurl }}" target="_blank" rel="noopener noreferrer">arXiv</a>
+                {% endif %}
+                {% if talk.videourl and talk.videourl != '' %}
+                  <a class="mini-link" href="{{ talk.videourl }}" target="_blank" rel="noopener noreferrer">Video</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Selected Latest Publications -->
+  <section class="section" aria-labelledby="recent-pubs-heading">
+    <div class="section__header">
+      <div>
+        <span class="section__kicker">Papers</span>
+        <h2 id="recent-pubs-heading" class="section__title">Recent Publications</h2>
+      </div>
+      <a class="section__more" href="{{ base_path }}/publications/">Browse all {{ site.publications.size }} &rarr;</a>
+    </div>
+
+    <div class="home-feed">
+      {% for post in site.publications reversed limit:7 %}
+        {% assign has_paperurl = false %}
+        {% if post.paperurl and post.paperurl != '' %}{% assign has_paperurl = true %}{% endif %}
+        <article class="home-feed__item home-feed__item--pub">
+          <div class="home-feed__meta">
+            <span class="venue-chip">{{ post.venue }} &rsquo;{{ post.date | date: "%y" }}</span>
+          </div>
+          <div class="home-feed__body">
+            <h3 class="home-feed__title">
+              {% if has_paperurl %}
+                <a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>
+              {% else %}
+                <a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a>
+              {% endif %}
+            </h3>
+            {% if post.authors and post.authors != '' %}
+              <p class="home-feed__authors">{{ post.authors | replace: "Yeounoh Chung", "<strong>Yeounoh Chung</strong>" }}</p>
+            {% endif %}
+          </div>
+          <div class="home-feed__links">
+            {% if has_paperurl %}
+              <a class="mini-link" href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">Paper</a>
+            {% endif %}
+            {% if post.arxivurl and post.arxivurl != '' and post.arxivurl != post.paperurl %}
+              <a class="mini-link" href="{{ post.arxivurl }}" target="_blank" rel="noopener noreferrer">arXiv</a>
+            {% endif %}
+            {% if post.codeurl and post.codeurl != '' %}
+              <a class="mini-link" href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">Code</a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+</main>

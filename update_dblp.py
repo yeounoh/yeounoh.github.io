@@ -39,6 +39,8 @@ for rec in root.findall('r'):
 
     year_element = pub.find('year')
     year = year_element.text if year_element is not None else 'YYYY'
+    pub_date = f"{year}-01-01" if year.isdigit() and len(year) == 4 else ''
+    authors = ", ".join(a.text.strip() for a in pub.findall('author') if a.text)
     
     # Venue/Collection - often in 'journal' or 'booktitle'
     venue_element = pub.find('journal') or pub.find('booktitle') or pub.find('publisher')
@@ -58,13 +60,15 @@ for rec in root.findall('r'):
     permalink_suffix = f"{year}_{file_title}"
     
     # Create the Jekyll Front Matter content
+    authors_line = f"\nauthors: \"{authors.replace('\"', '')}\"" if authors else ""
+    date_line = f"\ndate: {pub_date}" if pub_date else ""
     content = f"""---
 title: "{title}"
 collection: publications
 category: papers
 permalink: /publication/{permalink_suffix}
 venue: '{venue}'
-paperurl: '{paperurl}'
+paperurl: '{paperurl}'{authors_line}{date_line}
 ---
 """
     

@@ -9,10 +9,10 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : ">> Hello World!"
-title_separator          : "-"
+title                    : "Yeounoh Chung"
+title_separator          : "—"
 name                     : &name "Yeounoh Chung"
-description              : &description ""
+description              : &description "AI & Data Systems Research at Google Cloud — semantic data processing, Text-to-SQL optimization, and TPU-accelerated analytics."
 url                      : https://yeounoh.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "yeounoh/yeounoh.github.io"
@@ -24,12 +24,12 @@ author:
   # Biographic information
   avatar           : "yeounoh_pic2.PNG"
   name             : "Yeounoh Chung" 
-  #bio              :
-  #employer         : "Google"
+  bio              : "AI & Data Systems Researcher"
+  employer         : "Google Cloud"
   email            : "yeounohster@gmail.com" 
 
   # Academic websites
-  arxiv            : # URL - Update with the correct link to your profile
+  arxiv            : "https://arxiv.org/search/?searchtype=author&query=Chung%2C+Yeounoh"
   googlescholar    : "https://scholar.google.com/citations?user=MhlvmB4AAAAJ&hl=en"
   impactstory      : # URL
   orcid            : # URL

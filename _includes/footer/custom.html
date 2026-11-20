@@ -1,3 +1,24 @@
-<!-- start custom footer snippets -->
-<a href="/sitemap/">Sitemap</a>
-<!-- end custom footer snippets -->
+<!-- Progressive UI enhancements for keyboard accessibility and scroll depth -->
+<script>
+(function () {
+  var toggleLink = document.querySelector("#theme-toggle a");
+  if (toggleLink) {
+    toggleLink.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        var parent = document.getElementById("theme-toggle");
+        if (parent) parent.click();
+      }
+    });
+  }
+
+  var masthead = document.querySelector(".masthead");
+  if (masthead) {
+    var onScroll = function () {
+      masthead.classList.toggle("is-scrolled", window.scrollY > 8);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>

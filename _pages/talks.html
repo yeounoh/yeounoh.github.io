@@ -1,20 +1,66 @@
 ---
-layout: archive
-title: "Talks and presentations"
+layout: editorial
 permalink: /talks/
-author_profile: true
+kicker: "Presentations"
+title: "Talks & Presentations"
+subtitle: "Conference research talks, workshop keynotes & sessions, and invited systems engineering talks."
 ---
 
-{% if site.talkmap_link == true %}
+{% include base_path %}
 
-<p style="text-decoration:underline;"><a href="/talkmap.html">See a map of all the places I've given a talk!</a></p>
+<div class="talks-timeline">
+  {% for post in site.talks reversed %}
+    {% assign clean_body = post.content | strip_html | strip_newlines | strip %}
+    <article class="talk-entry">
+      <div class="talk-entry__aside">
+        <time class="talk-entry__date" datetime="{{ post.date | date: '%Y-%m-%d' }}">
+          {{ post.date | date: "%b %-d, %Y" }}
+        </time>
+        {% if post.location and post.location != '' %}
+          <span class="talk-entry__location">{{ post.location }}</span>
+        {% endif %}
+      </div>
 
-{% endif %}
+      <div class="talk-entry__main">
+        <div class="talk-entry__badges">
+          {% if post.venue and post.venue != '' %}
+            <span class="venue-chip">{{ post.venue }}</span>
+          {% endif %}
+          {% if post.type and post.type != '' %}
+            <span class="talk-entry__type">{{ post.type }}</span>
+          {% endif %}
+        </div>
 
-{% for post in site.talks reversed %}
-  <li style="display: list-item;">
-    <span class="archive__item-body" style="font-size: 0.8em;">
-      <i>"{{ post.title }}"</i>, {{ post.venue }}, {{post.location}} {{ post.date | default: "" | date: "%Y" }}
-    </span>
-  </li>
-{% endfor %}
+        <h2 class="talk-entry__title">
+          <a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a>
+        </h2>
+
+        {% if clean_body != '' %}
+          <p class="talk-entry__desc">{{ clean_body }}</p>
+        {% endif %}
+
+        {% assign has_links = false %}
+        {% if post.paperurl and post.paperurl != '' %}{% assign has_links = true %}{% endif %}
+        {% if post.arxivurl and post.arxivurl != '' %}{% assign has_links = true %}{% endif %}
+        {% if post.videourl and post.videourl != '' %}{% assign has_links = true %}{% endif %}
+        {% if post.slidesurl and post.slidesurl != '' %}{% assign has_links = true %}{% endif %}
+        {% if has_links %}
+          <div class="talk-entry__links">
+            {% if post.paperurl and post.paperurl != '' %}
+              <a class="mini-link" href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">Paper</a>
+            {% endif %}
+            {% if post.arxivurl and post.arxivurl != '' and post.arxivurl != post.paperurl %}
+              <a class="mini-link" href="{{ post.arxivurl }}" target="_blank" rel="noopener noreferrer">arXiv</a>
+            {% endif %}
+            {% if post.videourl and post.videourl != '' %}
+              <a class="mini-link" href="{{ post.videourl }}" target="_blank" rel="noopener noreferrer">Watch Session</a>
+            {% endif %}
+            {% if post.slidesurl and post.slidesurl != '' %}
+              <a class="mini-link" href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">Slides</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </article>
+  {% endfor %}
+</div>
