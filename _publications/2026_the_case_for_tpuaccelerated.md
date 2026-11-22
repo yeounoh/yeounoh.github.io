@@ -5,7 +5,7 @@ category: papers
 topic: tpu
 permalink: /publication/2026_the_case_for_tpuaccelerated
 venue: "arXiv preprint"
-authors: "Yeounoh Chung, Jaehyun Ha, Helena Caminal, Fatma Özcan, Aditya K. Kamath, Arvind Krishnamurthy, Henry M. Levy"
+authors: "Jaehyun Ha, Yeounoh Chung, Helena Caminal, Fatma Özcan, Aditya K. Kamath, Arvind Krishnamurthy, Henry M. Levy"
 paperurl: "https://arxiv.org/abs/2610.22673"
 arxivurl: "https://arxiv.org/abs/2610.22673"
 date: 2026-10-15
