@@ -717,9 +717,8 @@ html[data-theme="dark"] .masthead {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(2rem, 4vw, 3.25rem);
-  padding: 1.75rem 0;
+  padding: 2rem 0 0;
   border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
 }
 
 .profile-col .section__title {
@@ -758,99 +757,9 @@ html[data-theme="dark"] .masthead {
   color: var(--ink-secondary);
 }
 
-/* ==========================================================================
-   Homepage: Recent Talks & Recent Publications Feeds
-   ========================================================================== */
-
-.home-feed {
-  display: flex;
-  flex-direction: column;
-}
-
-.home-feed__item {
-  display: grid;
-  grid-template-columns: 205px minmax(0, 1fr);
-  align-items: baseline;
-  gap: 1.25rem;
-  padding: 0.95rem 0;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.home-feed__item--pub {
-  grid-template-columns: 165px minmax(0, 1fr) auto;
-  align-items: start;
-}
-
-.home-feed__item:last-child {
-  border-bottom: none;
-}
-
-.home-feed__meta {
-  font-size: 0.84rem;
-  line-height: 1.5;
-  color: var(--ink-muted);
-}
-
-.home-feed__meta time {
-  font-family: var(--font-mono);
-  font-size: 0.79rem;
-  color: var(--ink-secondary);
-}
-
-.venue-text {
-  font-weight: 500;
-  color: var(--ink-primary);
-}
-
 .meta-dot {
   margin: 0 0.22rem;
   color: var(--ink-muted);
-}
-
-.home-feed__body {
-  min-width: 0;
-}
-
-.home-feed__title {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.42;
-}
-
-.home-feed__title a {
-  color: var(--ink-primary) !important;
-  text-decoration: none !important;
-}
-
-.home-feed__title a:hover {
-  color: var(--accent) !important;
-}
-
-.home-feed__authors {
-  margin: 0.28rem 0 0;
-  font-size: 0.88rem;
-  line-height: 1.5;
-  color: var(--ink-secondary);
-}
-
-.home-feed__authors strong {
-  color: var(--ink-primary);
-  font-weight: 600;
-}
-
-.home-feed__links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.45rem;
-}
-
-.home-feed__item--pub .home-feed__links {
-  margin-top: 0.1rem;
-  justify-content: flex-end;
 }
 
 /* ==========================================================================
@@ -1359,16 +1268,6 @@ html[data-theme="dark"] .masthead {
   .profile-split {
     grid-template-columns: 1fr;
   }
-
-  .home-feed__item--pub {
-    grid-template-columns: 145px minmax(0, 1fr);
-  }
-
-  .home-feed__item--pub .home-feed__links {
-    grid-column: 2;
-    justify-content: flex-start;
-    margin-top: 0.45rem;
-  }
 }
 
 @media (max-width: 680px) {
@@ -1392,16 +1291,10 @@ html[data-theme="dark"] .masthead {
     gap: 0.4rem;
   }
 
-  .home-feed__item,
-  .home-feed__item--pub,
   .pub-row,
   .talk-entry {
     grid-template-columns: 1fr;
     gap: 0.45rem;
-  }
-
-  .home-feed__item--pub .home-feed__links {
-    grid-column: 1;
   }
 
   .site-footer__inner {
