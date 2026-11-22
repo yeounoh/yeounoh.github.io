@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 eyebrow: "AI & Data Systems Research · Google Cloud"
 tagline: "Co-designing databases, AI agents, and hardware compilers for scalable intelligent data processing."
-bio_summary: "I am a researcher and technical lead at Google Cloud exploring how database systems, large language models, and AI accelerators co-evolve. My recent work spans proxy-based semantic query optimization, agentic Text-to-SQL and multi-agent RL, and native analytical query execution on TPUs—building on earlier leadership in PyTorch/XLA distributed sharding (SPMD & Auto-Sharding) and automated ML model validation (TFX SliceFinder)."
+bio_summary: "I am at Google doing AI and data systems research, exploring how database systems, large language models, and AI accelerators co-evolve. My recent work spans semantic query optimization, Text-to-SQL and multi-agent reasoning, and TPU-accelerated analytical query processing—building on prior work in PyTorch/XLA distributed sharding (SPMD & Auto-Sharding) and automated ML model validation (TFX SliceFinder)."
 avatar_caption: "Systems, AI & Data Infrastructure"
 
 highlights:
@@ -74,8 +74,8 @@ interests:
 
 experience:
   - org: "Google Cloud"
-    role: "Research & Technical Lead"
-    detail: "Leading research on AI data systems, semantic query optimization, NL2SQL, and TPU analytical processing; previously led PyTorch/XLA SPMD & Auto-Sharding."
+    role: "AI & Data Systems Research"
+    detail: "Researching and building AI data systems, semantic query optimization, Text-to-SQL, and TPU analytical processing; previously worked on PyTorch/XLA SPMD & Auto-Sharding."
   - org: "Google Research"
     role: "Student Research Collaborator"
     detail: "Researched and built SliceFinder (ICDE '19, TKDE '20) for automated ML data slicing, integrated into TensorFlow Extended (TFX)."
